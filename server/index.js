@@ -17,6 +17,11 @@ app.use('/api/recipe-items', require('./routes/recipeItems'));
 app.use('/api/ingredient-lots', require('./routes/ingredientLots'));
 app.use('/api/batch-ingredients', require('./routes/batchIngredients'));
 
+// A simple test route to make sure the server responds at http://localhost:5001/
+app.get("/", (req, res) => {
+  res.send("<h1>Server is Alive!</h1><p>Try /api/categories to see data.</p>");
+});
+
 const PORT = 5001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
