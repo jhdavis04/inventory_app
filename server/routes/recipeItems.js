@@ -13,4 +13,15 @@ router.get('/:productId', async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 });
 
+router.post('/', async (req, res) => {
+    try {
+        const { product_id, ingredient_id, qty_required, unit } = req.body;
+        const result = await pool.query(
+            'INSERT INTO RecipeItems (product_id, ingredient_id, qty_required, unit) VALUES ($1, $2, $3, $4) RETURNING *',
+            [product_id, ingredient_id, qty_required, unit]
+        );
+        res.json(result.rows[0]);
+    } catch (err) { res.status(500).send(err.message); }
+});
+
 module.exports = router;

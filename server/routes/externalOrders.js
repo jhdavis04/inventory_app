@@ -9,4 +9,15 @@ router.get('/', async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 });
 
+router.post('/', async (req, res) => {
+    try {
+        const { source, external_order_id, ordered_at, last_synced_at } = req.body;
+        const result = await pool.query(
+            'INSERT INTO ExternalOrders (source, external_order_id, ordered_at, last_synced_at) VALUES ($1, $2, $3, $4) RETURNING *',
+            [source, external_order_id, ordered_at, last_synced_at]
+        );
+        res.json(result.rows[0]);
+    } catch (err) { res.status(500).send(err.message); }
+});
+
 module.exports = router;

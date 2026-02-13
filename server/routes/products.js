@@ -22,9 +22,8 @@ router.post("/", async (req, res) => {
   try {
     const { name, description, price, category_id } = req.body;
     const newProduct = await pool.query(
-      "INSERT INTO Products (name, description, price, category_id) VALUES($1, $2, $3, $4) RETURNING *",
-      [name, description, price, category_id]
-    );
+        "INSERT INTO Products (name, description, price, category_id) VALUES($1, $2, $3, $4) RETURNING *",
+        [name, description, price, category_id]);
     res.json(newProduct.rows[0]);
   } catch (err) {
     console.error(err.message);

@@ -9,4 +9,15 @@ router.get('/:batchId', async (req, res) => {
     } catch (err) { res.status(500).send(err.message); }
 });
 
+router.post('/', async (req, res) => {
+    try {
+        const { batch_id, ingredient_lot_id, qty_used } = req.body;
+        const result = await pool.query(
+            'INSERT INTO BatchIngredients (batch_id, ingredient_lot_id, qty_used) VALUES ($1, $2, $3) RETURNING *',
+            [batch_id, ingredient_lot_id, qty_used]
+        );
+        res.json(result.rows[0]);
+    } catch (err) { res.status(500).send(err.message); }
+});
+
 module.exports = router;
