@@ -1,68 +1,149 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* The semi-light blue motif you requested */
+  --bg-blue: #4682B4;         
+  --sidebar-dark: #4a4a4a;    
+  --accent-blue: #4a90e2;     
+  --card-white: #ffffff;
+  --text-main: #213547;
+  
+  /* Pico.css Overrides to keep the motif consistent */
+  --primary: var(--accent-blue);
+  --background-color: var(--bg-blue);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* 1. GLOBAL LAYOUT */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg-blue);
+  color: var(--text-main);
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  display: block; /* Fixes the Vite "center-everything" bug */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* 2. TOP NAVIGATION BAR (White Bar from Wireframe) */
+nav.top-nav {
+  background-color: white;
+  padding: 0.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+nav.top-nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav.top-nav a {
+  text-decoration: none;
+  color: var(--text-main);
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: color 0.2s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+nav.top-nav a:hover {
+  color: var(--accent-blue);
+}
+
+/* 3. THE GRID (70/30 Split) */
+.grid {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr; /* Table gets more room */
+  gap: 2rem;
+  align-items: start; /* CRITICAL: Keeps the sidebar from stretching to the bottom */
+}
+
+/* 4. DATA CARDS (The White Tables) */
+article {
+  background: white !important;
+  border-radius: 12px;
+  border: 1px solid #c5d4eb;
+  padding: 0; /* Let the table/header handle spacing */
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(74, 144, 226, 0.1);
+}
+
+article header {
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 1rem 1.5rem !important;
+  text-align: left;
+}
+
+/* 5. THE SIDEBAR (Dark Grey Motif) */
+.form-sidebar {
+  background-color: var(--sidebar-dark) !important;
+  padding: 2rem;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.form-sidebar h3 {
+  color: white;
+  margin-top: 0;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #666;
+  padding-bottom: 0.5rem;
+}
+
+.form-sidebar hr {
+  border-color: #666;
+  margin: 2rem 0;
+}
+
+/* Style inputs inside the sidebar */
+.form-sidebar input, 
+.form-sidebar select {
+  background-color: white;
+  color: black;
+  margin-bottom: 1rem;
+}
+
+/* 6. BUTTONS (Matching your dark/blue motif) */
+button.dark-btn {
+  background-color: var(--accent-blue);
+  border: none;
+  color: white;
+  width: 100%;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+button.dark-btn:hover {
+  opacity: 0.8;
+  background-color: var(--accent-blue);
+}
+
+/* 7. STATISTICS VIEW */
+.graph-box {
+  background-color: #7a7a7a;
+  color: white;
+  height: 400px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* MOBILE RESPONSIVENESS */
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: 1fr;
   }
 }
