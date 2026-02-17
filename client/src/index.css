@@ -1,24 +1,21 @@
 :root {
-  /* The semi-light blue motif you requested */
   --bg-blue: #4682B4;         
   --sidebar-dark: #4a4a4a;    
   --accent-blue: #4a90e2;     
   --card-white: #ffffff;
   --text-main: #213547;
-  
-  /* Pico.css Overrides to keep the motif consistent */
+
   --primary: var(--accent-blue);
   --background-color: var(--bg-blue);
 }
 
-/* 1. GLOBAL LAYOUT */
 body {
   margin: 0;
   min-height: 100vh;
   background-color: var(--bg-blue);
   color: var(--text-main);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  display: block; /* Fixes the Vite "center-everything" bug */
+  display: block;
 }
 
 /* 2. TOP NAVIGATION BAR (White Bar from Wireframe) */
@@ -61,6 +58,7 @@ nav.top-nav a:hover {
 article {
   background: white !important;
   border-radius: 12px;
+  margin-left: 15px;
   border: 1px solid #c5d4eb;
   padding: 0; /* Let the table/header handle spacing */
   overflow: hidden;
@@ -89,6 +87,7 @@ th, td {
   background-color: var(--sidebar-dark) !important;
   padding: 2rem;
   border-radius: 12px;
+  margin-right:15px;
   color: white;
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
@@ -135,6 +134,7 @@ button.dark-btn:hover {
   color: white;
   height: 400px;
   border-radius: 12px;
+  margin-left: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,4 +146,34 @@ button.dark-btn:hover {
   .grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Ensure the table fills the card and columns stay fixed */
+table {
+  width: 100%;
+  table-layout: fixed; /* Prevents columns from resizing based on content length */
+  border-collapse: collapse;
+}
+
+/* Style the Header Row */
+thead tr {
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #eee;
+}
+
+/* Evenly split columns and add dividers */
+th, td {
+  padding: 1rem !important;
+  text-align: left;
+  border-right: 1px solid #eee; /* This creates the vertical divider */
+}
+
+/* Remove the divider from the very last column */
+th:last-child, td:last-child {
+  border-right: none;
+}
+
+/* Optional: Zebra striping for better readability */
+tbody tr:nth-child(even) {
+  background-color: rgba(74, 144, 226, 0.05); /* Very light blue stripe */
 }

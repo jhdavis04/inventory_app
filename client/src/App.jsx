@@ -79,23 +79,47 @@ function App() {
       {/* --- MAIN CONTENT AREA --- */}
       <div className="container">
         
-        {/* 1. INVENTORY VIEW - Matches Wireframe 3 */}
+        {/* --- 1. INVENTORY VIEW --- */}
         {view === "inventory" && (
           <div className="grid">
             <article>
-              <header>Item Quantity Category</header>
-              <table>
-                <tbody>
-                  {db.products.map(p => (
-                    <tr key={p.id}>
-                      <td>{p.name}</td>
-                      <td>-</td> 
-                      <td>{db.categories.find(c => c.id === p.category_id)?.name || "N/A"}</td>
+              <header style={{ padding: 0 }}>
+                {/* Header Table for fixed alignment */}
+                <table style={{ margin: 0 }}>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '50%' }}>Item</th>
+                      <th style={{ width: '20%' }}>Quantity</th>
+                      <th style={{ width: '30%' }}>Category</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                </table>
+              </header>
+              
+              <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+                <table style={{ margin: 0 }}>
+                  <tbody>
+                    {db.products.map(p => (
+                      <tr key={p.id}>
+                        <td style={{ width: '50%' }}>{p.name}</td>
+                        <td style={{ width: '20%' }}>{p.quantity || 0}</td> 
+                        <td style={{ width: '30%' }}>{p.category_name || "N/A"}</td>
+                      </tr>
+                    ))}
+                    {/* Fill empty rows if data is sparse to maintain wireframe look */}
+                    {db.products.length < 5 && [1, 2, 3].map(i => (
+                      <tr key={`empty-${i}`}>
+                        <td style={{ width: '50%' }}>ETC</td>
+                        <td style={{ width: '20%' }}>ETC</td>
+                        <td style={{ width: '30%' }}></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </article>
+
+            {/* Sidebar remains on the right as per your wireframe */}
             <section className="form-sidebar">
               <h3>--Category--</h3>
               <CategoryForm onRefresh={refreshData} />
@@ -106,22 +130,34 @@ function App() {
           </div>
         )}
 
-        {/* 2. INGREDIENT STOCK VIEW - Matches Wireframe 4 */}
+        {/* --- 2. INGREDIENT STOCK VIEW --- */}
         {view === "stock" && (
           <div className="grid">
             <article>
-              <header>Ingredient Amount Batch</header>
-              <table>
-                <tbody>
-                  {db.ingredients.map(i => (
-                    <tr key={i.id}>
-                      <td>{i.name}</td>
-                      <td>-</td>
-                      <td>-</td>
+              <header style={{ padding: 0 }}>
+                <table style={{ margin: 0 }}>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '40%' }}>Ingredient</th>
+                      <th style={{ width: '30%' }}>Amount</th>
+                      <th style={{ width: '30%' }}>Unit</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                </table>
+              </header>
+              <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+                <table style={{ margin: 0 }}>
+                  <tbody>
+                    {db.ingredients.map(i => (
+                      <tr key={i.id}>
+                        <td style={{ width: '40%' }}>{i.name}</td>
+                        <td style={{ width: '30%' }}>{i.total_amount || 0}</td>
+                        <td style={{ width: '30%' }}>{i.unit || "N/A"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </article>
             <section className="form-sidebar">
               <h3>--Ingredient--</h3>
@@ -133,40 +169,56 @@ function App() {
           </div>
         )}
 
-        {/* 3. SALE HISTORY VIEW - Matches Wireframe 2 */}
+        {/* --- 3. SALE HISTORY VIEW --- */}
         {view === "history" && (
           <div className="grid">
             <article>
-              <header>Name Item Name Quantity Price Date</header>
-              <table>
-                <tbody>
-                  {db.orders.map(o => (
-                    <tr key={o.id}>
-                      <td>{o.source}</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>{new Date(o.ordered_at).toLocaleDateString()}</td>
+              <header style={{ padding: 0 }}>
+                <table style={{ margin: 0 }}>
+                  <thead>
+                    <tr>
+                      <th style={{ width: '20%' }}>Source</th>
+                      <th style={{ width: '30%' }}>Item Name</th>
+                      <th style={{ width: '15%' }}>Qty</th>
+                      <th style={{ width: '15%' }}>Price</th>
+                      <th style={{ width: '20%' }}>Date</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                </table>
+              </header>
+              <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+                <table style={{ margin: 0 }}>
+                  <tbody>
+                    {db.orderItems.map(item => (
+                      <tr key={item.id}>
+                        <td style={{ width: '20%' }}>{item.source}</td>
+                        <td style={{ width: '30%' }}>{item.product_name}</td>
+                        <td style={{ width: '15%' }}>{item.quantity}</td>
+                        <td style={{ width: '15%' }}>${item.unit_price}</td>
+                        <td style={{ width: '20%' }}>{new Date(item.ordered_at).toLocaleDateString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </article>
             <section className="form-sidebar">
               <h3>--Log Sale--</h3>
               <OrderForm onRefresh={refreshData} />
+              <hr />
+              <h3>--Item Details--</h3>
               <OrderItemForm orders={db.orders} products={db.products} onRefresh={refreshData} />
             </section>
           </div>
         )}
 
-        {/* 4. STATISTICS VIEW - Matches Wireframe 1 */}
+        {/* 4. STATISTICS VIEW */}
         {view === "stats" && (
           <div className="grid">
             <div>
               <div className="graph-box">INSERT GRAPHS HERE</div>
               <article style={{ marginTop: '1rem', width: '300px', textAlign: 'center' }}>
-                ACTUAL NUMBER HERE
+                Actual Number
               </article>
             </div>
             <section className="form-sidebar">
