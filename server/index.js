@@ -6,20 +6,19 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/categories', require('./routes/categories'));
-app.use('/api/products', require('./routes/products'));
-app.use('/api/external-orders', require('./routes/externalOrders'));
-app.use('/api/external-order-items', require('./routes/externalOrderItems'));
-app.use('/api/product-mappings', require('./routes/productMappings'));
-app.use('/api/batches', require('./routes/batches'));
-app.use('/api/ingredients', require('./routes/ingredients'));
-app.use('/api/recipe-items', require('./routes/recipeItems'));
-app.use('/api/ingredient-lots', require('./routes/ingredientLots'));
-app.use('/api/batch-ingredients', require('./routes/batchIngredients'));
+app.use('/categories', require('./routes/categories'));
+app.use('/products', require('./routes/products'));
+app.use('/external-orders', require('./routes/externalOrders'));
+app.use('/external-order-items', require('./routes/externalOrderItems'));
+app.use('/product-mappings', require('./routes/productMappings'));
+app.use('/batches', require('./routes/batches'));
+app.use('/ingredients', require('./routes/ingredients'));
+app.use('/recipe-items', require('./routes/recipeItems'));
+app.use('/ingredient-lots', require('./routes/ingredientLots'));
+app.use('/batch-ingredients', require('./routes/batchIngredients'));
 
-// A simple test route to make sure the server responds at http://localhost:5001/
 app.get("/", (req, res) => {
-  res.send("<h1>Server is Alive!</h1><p>Try /api/categories to see data.</p>");
+  res.send("<h1>Server is Alive!</h1>");
 });
 
 const PORT = 5001;
